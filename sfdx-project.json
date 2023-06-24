@@ -1,0 +1,12 @@
+{
+  "packageDirectories": [
+    {
+      "path": "sf-source/fundamentals-enterprise-patterns",
+      "default": true
+    }
+  ],
+  "name": "sed23-fundamentals-enterprise-patterns",
+  "namespace": "",
+  "sfdcLoginUrl": "https://login.salesforce.com",
+  "sourceApiVersion": "57.0"
+}
