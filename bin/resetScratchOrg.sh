@@ -2,12 +2,11 @@
 
 ###############################################################
 # 
-# bin/resetScratchOrg.sh {org_alias} {--default}
+# bin/resetScratchOrg.sh {org_alias}
 # 
 ###############################################################
 
 org_alias=$1
-set_to_default=$2
 
 if [ -z "$1" ]
   then
@@ -110,11 +109,8 @@ if [ 99 -gt "$progress_marker_value" ]
     progress_marker_value=99
 fi
 
-if [ "$set_to_default" == "--default" ]
-  then
-    echo "Setting $org_alias as the default username"
-    sfdx config set target-org=$org_alias
-fi
+echo "Setting $org_alias as the default username"
+sfdx config set target-org=$org_alias
 
 # remove marker file
 rm "$temp_dir/$progress_marker_filename"
