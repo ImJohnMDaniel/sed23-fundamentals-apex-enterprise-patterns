@@ -1,0 +1,32 @@
+Selectors
+- SELECTOR-01: replace MerchandiseController's Account query in createNewOrder() method and Order query in addToOrder() method
+    - AccountsSelector
+        - Add the fields that you need
+    - IAccountsSelector
+    - OrdersSelector
+    - IOrdersSelector
+- SELECTOR-02: replace MerchandiseController's Product2 query in productsToDisplay() and addToOrder() methods
+    - ProductsSelector
+        - Add method selectActive() for productsToDisplay() method 
+        - Add method selectByName() for addToOrder() method
+    - IProductsSelector
+Domains
+- DOMAIN-01:
+    - Orders domain class 
+        - intro to domains
+        - static mehtod to build Orders from Accounts
+        - onApplyDefaults() method 
+            - newOrder.ActivatedById = UserInfo.getUserId();
+    - Orders.trigger
+        - set for all trigger contexts
+        - one line to route to trigger framework 
+- DOMAIN-02
+    - Orders domain
+        - newOrderForAccount(Account customerAccount) method 
+        - add to Orders 
+Services
+- SERVICE-01
+    - IOrdersService
+    - OrdersService
+    - OrdersServiceImpl
+    - OrdersServiceException
