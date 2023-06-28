@@ -54,7 +54,7 @@ if [ 20 -gt "$progress_marker_value" ]
   then
     sf org create scratch --wait 30 --duration-days 2 --definition-file config/project-scratch-def.json --alias $org_alias
     echo "Setting $org_alias as the default username"
-    sfdx config set target-org=$org_alias
+    sf config set target-org $org_alias
     echo 20 > "$temp_dir/$progress_marker_filename"
     progress_marker_value=20
 fi
@@ -103,7 +103,7 @@ fi
 # Open the org
 if [ 99 -gt "$progress_marker_value" ]
   then
-    sfdx org open --path lightning/setup/SetupOneHome/home --target-org $org_alias
+    sf org open --path lightning/setup/SetupOneHome/home --target-org $org_alias
     echo ""
     echo "Scratch org $org_alias is ready"
     echo ""
