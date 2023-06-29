@@ -25,6 +25,7 @@ public with sharing class MerchandiseController
     @AuraEnabled
     public static Id createNewOrder(Id accountId)
     {
+        /* SERVICE-01
         try {
             // *** SELECTOR-01
             // Account customerAccount = [SELECT Id, Name
@@ -66,13 +67,26 @@ public with sharing class MerchandiseController
         } catch (Exception e) {
             throw new AuraHandledException(e.getMessage());
         }
+        */
+
+        // SERVICE-01
+        try 
+        {
+            return OrdersService.createNewOrder(accountId);
+
+        } catch (Exception e) {
+            throw new AuraHandledException(e.getMessage());
+        }
+
     }
 
     @AuraEnabled
     public static void addToOrder(Id orderId, String productName, Integer requestedQuantity)
     {
+        
         try 
         {
+            /*
             // get the order record
             // *** SELECTOR-01
             // Order currentOrder = [SELECT Id, OrderNumber FROM Order WHERE Id = :orderId];
@@ -112,6 +126,9 @@ public with sharing class MerchandiseController
             
             // save the order and update the warehouse quantity
             insert newOrderItem;
+            */
+            // SERVICE-01B
+            OrdersService.addToOrder(orderId, productName, requestedQuantity);
             
         } catch (Exception e) {
             throw new AuraHandledException(e.getMessage());
