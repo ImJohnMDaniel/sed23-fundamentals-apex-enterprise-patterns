@@ -25,8 +25,16 @@ Domains
         - newOrderForAccount(Account customerAccount) method 
         - add to Orders 
 Services
-- SERVICE-01
+- SERVICE-01 and 01B
     - IOrdersService
     - OrdersService
     - OrdersServiceImpl
     - OrdersServiceException
+
+Unit of work
+- UOW-01
+    - OrdersService
+
+Application Factory
+- APPFACTORY-01
+    - OrdersService
