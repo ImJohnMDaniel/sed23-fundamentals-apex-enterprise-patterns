@@ -6,50 +6,79 @@
 @REM ###############################################################
 
 REM set variables
-set "org_alias=%~1"
-echo "org_alias is %org_alias%"
-set "temp_dir=temp"
+SET "org_alias=%~1"
+ECHO org_alias is %org_alias%
+SET "temp_dir=temp"
 
+ECHO.
+ECHO Setting up scratch org %org_alias%
+
+ECHO.
 REM Delete any previous scratch org with same alias
-call sf org delete scratch --no-prompt --target-org %org_alias%
-if %errorlevel% neq 0 exit /b %errorlevel%
+ECHO Delete any previous scratch org with same alias
+ECHO sf org delete scratch --no-prompt --target-org %org_alias%
+CALL sf org delete scratch --no-prompt --target-org %org_alias%
 
+ECHO.
 REM Create new scratch org
-call sf org create scratch --wait 30 --duration-days 2 --definition-file config/project-scratch-def.json --alias %org_alias%
-echo "Setting %org_alias% as the default username"
-call sf config set target-org %org_alias%
+ECHO Create new scratch org
+ECHO sf org create scratch --wait 30 --duration-days 2 --definition-file config/project-scratch-def.json --alias %org_alias%
+CALL sf org create scratch --wait 30 --duration-days 2 --definition-file config/project-scratch-def.json --alias %org_alias%
+ECHO Setting %org_alias% as the default username
+CALL sf config set target-org %org_alias%
 if %errorlevel% neq 0 exit /b %errorlevel%
 
+ECHO.
 REM Change default timezone of org
-call sf data update record --sobject Organization --where "Name='SED23-fundamentals-enterprise-patterns'" --values "TimeZoneSidKey='America/New_York'" --target-org %org_alias%
+ECHO Change default timezone of org
+ECHO sf data update record --sobject Organization --where "Name='SED23-fundamentals-enterprise-patterns'" --values "TimeZoneSidKey='America/New_York'" --target-org %org_alias%
+CALL sf data update record --sobject Organization --where "Name='SED23-fundamentals-enterprise-patterns'" --values "TimeZoneSidKey='America/New_York'" --target-org %org_alias%
+ECHO.
 REM Change timezone of default DX Scratch Org User
-call sf data update record --sobject User --where "Name='User User'" --values "TimeZoneSidKey='America/New_York'" --target-org %org_alias%
+ECHO Change timezone of default DX Scratch Org User
+ECHO sf data update record --sobject User --where "Name='User User'" --values "TimeZoneSidKey='America/New_York'" --target-org %org_alias%
+CALL sf data update record --sobject User --where "Name='User User'" --values "TimeZoneSidKey='America/New_York'" --target-org %org_alias%
 
-REM Install all dependencies
-REM     Install fflib-apex-mocks framework
-call del /f /s /q %temp_dir%\fflib-apex-mocks
-call git clone -q --no-tags https://github.com/apex-enterprise-patterns/fflib-apex-mocks.git %temp_dir%\fflib-apex-mocks
+ECHO.
+REM Installing all framework dependencies
+ECHO Installing all framework dependencies
+REM     Installing fflib-apex-mocks framework
+ECHO     Installing fflib-apex-mocks framework
+RMDIR "%temp_dir%\fflib-apex-mocks" /S /Q
+ECHO git clone -q --no-tags https://github.com/apex-enterprise-patterns/fflib-apex-mocks.git %temp_dir%\fflib-apex-mocks
+CALL git clone -q --no-tags https://github.com/apex-enterprise-patterns/fflib-apex-mocks.git %temp_dir%\fflib-apex-mocks
 if %errorlevel% neq 0 exit /b %errorlevel%
 cd %temp_dir%\fflib-apex-mocks
-call sf project deploy start --ignore-conflicts --target-org %org_alias%
+ECHO sf project deploy start --ignore-conflicts --target-org %org_alias%
+CALL sf project deploy start --ignore-conflicts --target-org %org_alias%
 if %errorlevel% neq 0 exit /b %errorlevel%
 cd ../..
 
-REM     Install fflib-apex-common framework
-call del /f /s /q %temp_dir%\fflib-apex-common
-call git clone -q --no-tags https://github.com/apex-enterprise-patterns/fflib-apex-common.git %temp_dir%\fflib-apex-common
+ECHO.
+REM     Installing fflib-apex-common framework
+ECHO     Installing fflib-apex-common framework
+RMDIR "%temp_dir%\fflib-apex-common" /S /Q
+ECHO git clone -q --no-tags https://github.com/apex-enterprise-patterns/fflib-apex-common.git %temp_dir%\fflib-apex-common
+CALL git clone -q --no-tags https://github.com/apex-enterprise-patterns/fflib-apex-common.git %temp_dir%\fflib-apex-common
 if %errorlevel% neq 0 exit /b %errorlevel%
 cd %temp_dir%\fflib-apex-common
-call sf project deploy start --ignore-conflicts --target-org %org_alias%
+ECHO sf project deploy start --ignore-conflicts --target-org %org_alias%
+CALL sf project deploy start --ignore-conflicts --target-org %org_alias%
 if %errorlevel% neq 0 exit /b %errorlevel%
 cd ../..
 
-REM Push source code to org.
-call sf project deploy start --ignore-conflicts --target-org %org_alias%
+ECHO.
+REM Pushing project source code to org
+ECHO Pushing project source code to org
+ECHO sf project deploy start --ignore-conflicts --target-org %org_alias%
+CALL sf project deploy start --ignore-conflicts --target-org %org_alias%
 if %errorlevel% neq 0 exit /b %errorlevel%
 
-REM Open the org
-call sf org open --path lightning/setup/SetupOneHome/home --target-org %org_alias%
-echo ""
-echo "Scratch org %org_alias% is ready"
-echo ""
+ECHO.
+REM Opening the org
+ECHO Opening the org
+ECHO sf org open --path lightning/setup/SetupOneHome/home --target-org %org_alias%
+CALL sf org open --path lightning/setup/SetupOneHome/home --target-org %org_alias%
+ECHO.
+ECHO Scratch org %org_alias% is ready
+ECHO.
